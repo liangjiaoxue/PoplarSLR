@@ -1,0 +1,28 @@
+
+####### 
+## vcf filtering  
+cd GWAS_SNP
+plink --vcf PdelSDR_merge_sort.vcf  \
+ --maf 0.05 --geno 0.1 --recode vcf-iid --out PdelSDR_filter --allow-extra-chr 
+
+
+##### 
+## convert into bimbam
+cd GWAS_SNP
+qctool   -g  PdelSDR_filter.vcf -ofiletype bimbam_dosage -og PdelSDR_filter_geno.txt
+gzip PdelSDR_filter_geno.txt
+
+
+##### 
+## run gemma matrix
+cd GWAS_SNP
+gemma -g PdelSDR_filter_geno.txt.gz -p Pdel_pheno_Sex.txt \
+    -gk -o Pdel_sex  
+
+
+# run univariate LMM
+cd GWAS_SNP
+gemma -g PdelSDR_filter_geno.txt.gz  \
+    -p Pdel_pheno_Sex.txt   -n 1 \
+    -k ./output/Pdel_sex.cXX.txt -lm -o Pop_pri_sex 
+

@@ -1,0 +1,20 @@
+## Get coverage information
+cd  GWAS_Coverage
+python Coverage2dose_Folder.py coverage_all_folder  coverage_dose.txt
+gzip coverage_dose.txt
+
+
+##### 
+## run gemma matrix
+cd  GWAS_Coverage
+gemma -g coverage_dose.txt.gz -p Pdel_pheno_Sex_Coverage.txt \
+    -gk -o Pdel_sex 
+
+
+# run univariate LMM
+cd  GWAS_Coverage
+gemma -g coverage_dose.txt.gz  \
+    -p Pdel_pheno_Sex_Coverage.txt   -n 1 \
+    -k ./output/Pdel_sex.cXX.txt -lm -o Pop_pri_sex 
+
+

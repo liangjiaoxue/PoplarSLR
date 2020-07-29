@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-This code combine counts from feature counts
+This code combine coverage files from bedtools into bimbam format.
 """
 
 from sys import argv
